@@ -30,10 +30,11 @@ ScriptTextWebpackPlugin.prototype.main = function(config){
 };
 
 ScriptTextWebpackPlugin.prototype.execSingleTask = function(singleConfig){
-    singleConfig = utils.deepAssign({}, defaultConfig, singleConfig);
+    var defaultConfig = this.option.default;
 
-    var defaultConfig = this.option.default,
-        source = singleConfig.source,
+    singleConfig = utils.deepAssign({}, defaultConfig, singleConfig);
+    
+    var source = singleConfig.source,
         output = singleConfig.output;
 
     var sourceStr = this.readFile(source, singleConfig);

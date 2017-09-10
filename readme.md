@@ -2,6 +2,7 @@
 
 ![language][1]
 ![travis][2]
+
 [![NPM](https://nodei.co/npm/scripttext-webpack-plugin.png)](https://nodei.co/npm/scripttext-webpack-plugin/)
 
 Webpack插件，用来自动生成script标签

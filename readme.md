@@ -19,8 +19,6 @@ npm install scripttext-webpack-plugin --save-dev
 ### 基本使用
 该插件会自动将位置标记替换为引用目标chunk的script标签
 
-#### 文件目录结构
-
 ```js
 var path = require('path');
 var ScriptTextPlugin = require('scripttext-webpack-plugin');

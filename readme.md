@@ -6,6 +6,7 @@
 [![NPM](https://nodei.co/npm/scripttext-webpack-plugin.png)](https://nodei.co/npm/scripttext-webpack-plugin/)
 
 Webpack插件，用来自动生成script标签
+
 应用场景：在html文件中自动添加webpack打包后的script引用
 
 ## 使用说明

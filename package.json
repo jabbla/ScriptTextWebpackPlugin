@@ -1,6 +1,6 @@
 {
   "name": "scripttext-webpack-plugin",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "webpack plugin",
   "main": "index.js",
   "directories": {

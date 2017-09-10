@@ -1,7 +1,8 @@
 # Scripttext Webpack Plugin
 
-Webpack插件，用来自动生成script标签
+![travis][1]
 
+Webpack插件，用来自动生成script标签
 应用场景：在html文件中自动添加webpack打包后的script引用
 
 ## 使用说明
@@ -169,7 +170,7 @@ module.exports = {
     },
     output: {
         filename: '[name].[chunkhash:10].js',
-        path: path.resolve(__dirname, './dist/js')
+        path: path.resolve(__dirname, './dist')
     },
     plugins: [
         new ScriptTextPlugin({
@@ -178,8 +179,8 @@ module.exports = {
                 {
                     pageName: 'page1',
                     chunks: [
-                        {name: 'chunk1', path: './[pageName]/dist/js'},
-                        {name: 'chunk2', path: './[pageName]/dist/js'}
+                        {name: 'chunk1', path: './[pageName]/js'},
+                        {name: 'chunk2', path: './[pageName]/js'}
                     ]
                 }
             ]
@@ -199,15 +200,12 @@ module.exports = {
     <title>Document</title>
 </head>
 <body>
-<script src="page1\dist\js\chunk1.947b04c5d3.js"></script>
-<script src="page1\dist\js\chunk2.a7213u22d3.js"></script>
+<script src="page1\js\chunk1.947b04c5d3.js"></script>
+<script src="page1\js\chunk2.a7213u22d3.js"></script>
 
 </body>
 </html>
 ```
 
 
-
-
-
-
+  [1]: https://travis-ci.org/jabbla/ScriptTextWebpackPlugin.svg?branch=master

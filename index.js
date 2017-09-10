@@ -125,8 +125,8 @@ ScriptTextWebpackPlugin.prototype.outputFile = function(outputStr, outputConfig,
 };
 
 ScriptTextWebpackPlugin.prototype.resolveText = function(text, singleConfig){
-    var textNamePattern = /\[textName\]/g,
-        textName = singleConfig.textName || '';
+    var textNamePattern = /\[pageName\]/g,
+        textName = singleConfig.pageName || '';
     
     return text.replace(textNamePattern, textName)
 };

@@ -14,17 +14,17 @@ module.exports = {
         new HelloPlugin({
             default: {
                 source:{
-                    filename: '[textName].html',
-                    path: path.resolve(__dirname, './test/src/[textName]')
+                    filename: '[pageName].html',
+                    path: path.resolve(__dirname, './test/src/[pageName]')
                 },
                 output: {
-                    filename: '[textName].html',
-                    path: path.resolve(__dirname, './test/dist/[textName]')
+                    filename: '[pageName].html',
+                    path: path.resolve(__dirname, './test/dist/[pageName]')
                 }
             },
             config: [
                 {
-                    textName: 'test',
+                    pageName: 'test',
                     chunks: [{
                         name: 'test',
                         path: './'
@@ -34,7 +34,7 @@ module.exports = {
                     }]
                 },
                 {
-                    textName: 'test1',
+                    pageName: 'test1',
                     chunks: [{
                         name: 'test1',
                         path: './'

@@ -1,6 +1,7 @@
 # ScriptText Webpack Plugin
 
 ![language][1]
+[![npm version](https://badge.fury.io/js/scripttext-webpack-plugin.svg)](https://badge.fury.io/js/scripttext-webpack-plugin)
 ![travis][2]
 
 [![NPM](https://nodei.co/npm/scripttext-webpack-plugin.png)](https://nodei.co/npm/scripttext-webpack-plugin/)

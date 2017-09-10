@@ -1,6 +1,8 @@
 # Scripttext Webpack Plugin
 
-![travis][1]
+![language][1]
+![travis][2]
+[![NPM](https://nodei.co/npm/scripttext-webpack-plugin.png)](https://nodei.co/npm/scripttext-webpack-plugin/)
 
 Webpack插件，用来自动生成script标签
 应用场景：在html文件中自动添加webpack打包后的script引用
@@ -208,4 +210,5 @@ module.exports = {
 ```
 
 
-  [1]: https://travis-ci.org/jabbla/ScriptTextWebpackPlugin.svg?branch=master
+  [1]: https://img.shields.io/badge/language-node.js-orange.svg
+  [2]: https://travis-ci.org/jabbla/ScriptTextWebpackPlugin.svg?branch=master

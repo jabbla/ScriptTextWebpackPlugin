@@ -1,6 +1,8 @@
 var Path = require('path');
 var fs = require('fs');
 var utils = require('./lib/utils.js');
+var Promise = require('bluebird');
+Promise.promisifyAll(fs);
 
 var ScriptTextWebpackPlugin = function(option){
     this.option = option;
@@ -35,13 +37,17 @@ ScriptTextWebpackPlugin.prototype.execSingleTask = function(singleConfig){
     singleConfig = utils.deepAssign({}, defaultConfig, singleConfig);
     
     var source = singleConfig.source,
-        output = singleConfig.output;
+        output = singleConfig.output,
+        self = this;
 
-    var sourceStr = this.readFile(source, singleConfig);
+    this.readFile(source, singleConfig).then(function(sourceStr){
+        return self.generateText(sourceStr, singleConfig);
+    }).then(function(resultStr){
+        return self.outputFile(resultStr, output, singleConfig);
+    }).catch(function(e){
+        throw new Error(e);
+    });
 
-    var resultStr = this.generateText(sourceStr, singleConfig);
-
-    this.outputFile(resultStr, output, singleConfig);
 };
 
 ScriptTextWebpackPlugin.prototype.readFile = function(fileConfig, singleConfig){
@@ -49,7 +55,7 @@ ScriptTextWebpackPlugin.prototype.readFile = function(fileConfig, singleConfig){
         filename = this.resolveText(fileConfig.filename, singleConfig),
         filePath = Path.resolve(path, filename);
     
-    return fs.readFileSync(filePath, 'utf-8');
+    return fs.readFileAsync(filePath, 'utf-8');
 };
 
 ScriptTextWebpackPlugin.prototype.generateText = function(sourceStr, singleConfig){
@@ -114,14 +120,7 @@ ScriptTextWebpackPlugin.prototype.outputFile = function(outputStr, outputConfig,
     var filename = this.resolveText(outputConfig.filename, singleConfig),
         path = this.resolveText(outputConfig.path, singleConfig);
 
-    try{
-        fs.writeFileSync(Path.resolve(path, filename), outputStr);
-    }catch(e){
-        if(e.code==='ENOENT'){
-            fs.mkdirSync(Path.resolve(path));
-            fs.writeFileSync(Path.resolve(path, filename), outputStr);
-        }
-    }
+    return utils.mustWriteFileAsync(Path.resolve(path, filename), outputStr);
 };
 
 ScriptTextWebpackPlugin.prototype.resolveText = function(text, singleConfig){

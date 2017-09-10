@@ -13,9 +13,6 @@ module.exports = {
     plugins: [
         new HelloPlugin({
             default: {
-                script: {
-                    positionFlag: '${{{bundle}}}'
-                },
                 source:{
                     filename: '[textName].html',
                     path: path.resolve(__dirname, './test/src/[textName]')
@@ -33,7 +30,7 @@ module.exports = {
                         path: './'
                     }, {
                         name: 'test1',
-                        path: '../test1/'
+                        path: '../test1'
                     }]
                 },
                 {

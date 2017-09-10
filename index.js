@@ -4,6 +4,7 @@ var utils = require('./lib/utils.js');
 
 var ScriptTextWebpackPlugin = function(option){
     this.option = option;
+    this.positionFlag = '{{{webpack-chunks}}}';
 }
 
 ScriptTextWebpackPlugin.prototype.apply = function(compiler){
@@ -52,7 +53,8 @@ ScriptTextWebpackPlugin.prototype.readFile = function(fileConfig, singleConfig){
 }
 
 ScriptTextWebpackPlugin.prototype.generateText = function(sourceStr, singleConfig){
-    var positionFlag = new RegExp(utils.invertRegExpSymbols(singleConfig.script.positionFlag), 'g'),
+    var flag = (singleConfig.script && singleConfig.script.positionFlag) || this.positionFlag,
+        positionFlag = new RegExp(utils.invertRegExpSymbols(flag), 'g'),
         scriptStrs = this.genScripts(singleConfig);
 
     if(!scriptStrs) return;
@@ -84,7 +86,8 @@ ScriptTextWebpackPlugin.prototype.genScriptSrc = function(scriptPattern, scriptC
             }
             return chunkhash;
         });
-        return path+scriptPattern;
+
+        return Path.join(path, scriptPattern);
     }else{
         console.error('no '+chunkName+' entry');
     }

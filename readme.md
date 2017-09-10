@@ -1,4 +1,4 @@
-# Scripttext Webpack Plugin
+# ScriptText Webpack Plugin
 
 ![language][1]
 ![travis][2]

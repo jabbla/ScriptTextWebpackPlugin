@@ -5,7 +5,7 @@ var utils = require('./lib/utils.js');
 var ScriptTextWebpackPlugin = function(option){
     this.option = option;
     this.positionFlag = '{{{webpack-chunks}}}';
-}
+};
 
 ScriptTextWebpackPlugin.prototype.apply = function(compiler){
     var self = this;
@@ -30,8 +30,9 @@ ScriptTextWebpackPlugin.prototype.main = function(config){
 };
 
 ScriptTextWebpackPlugin.prototype.execSingleTask = function(singleConfig){
+    singleConfig = utils.deepAssign({}, defaultConfig, singleConfig);
+
     var defaultConfig = this.option.default,
-        singleConfig = utils.deepAssign({}, defaultConfig, singleConfig),
         source = singleConfig.source,
         output = singleConfig.output;
 
@@ -45,12 +46,10 @@ ScriptTextWebpackPlugin.prototype.execSingleTask = function(singleConfig){
 ScriptTextWebpackPlugin.prototype.readFile = function(fileConfig, singleConfig){
     var path = this.resolveText(fileConfig.path, singleConfig),
         filename = this.resolveText(fileConfig.filename, singleConfig),
-        entryName = singleConfig.textName;
-
-    var filePath = Path.resolve(path, filename);
+        filePath = Path.resolve(path, filename);
     
-    return fs.readFileSync(filePath, 'utf-8')
-}
+    return fs.readFileSync(filePath, 'utf-8');
+};
 
 ScriptTextWebpackPlugin.prototype.generateText = function(sourceStr, singleConfig){
     var flag = (singleConfig.script && singleConfig.script.positionFlag) || this.positionFlag,
@@ -61,7 +60,7 @@ ScriptTextWebpackPlugin.prototype.generateText = function(sourceStr, singleConfi
 
 
     return sourceStr.replace(positionFlag, scriptStrs);
-}
+};
 
 ScriptTextWebpackPlugin.prototype.genScriptSrc = function(scriptPattern, scriptConfig, singleConfig){
     var compilation = this.compilation,
@@ -73,14 +72,14 @@ ScriptTextWebpackPlugin.prototype.genScriptSrc = function(scriptPattern, scriptC
         
 
     if(entry[chunkName]){
-        scriptPattern = scriptPattern.replace(/\[name\]/g, chunkName)
-        scriptPattern = scriptPattern.replace(/\[hash\:?([0-9]*)\]/g, function(str, num){
+        scriptPattern = scriptPattern.replace(/\[name\]/g, chunkName);
+        scriptPattern = scriptPattern.replace(/\[hash:?([0-9]*)\]/g, function(str, num){
             if(/[0-9]+/.test(num)){
                 hash = hash.slice(0, +num);
             }
             return hash;
         });
-        scriptPattern = scriptPattern.replace(/\[chunkhash\:?([0-9]*)\]/g, function(str, num){
+        scriptPattern = scriptPattern.replace(/\[chunkhash:?([0-9]*)\]/g, function(str, num){
             if(/[0-9]+/.test(num)){
                 chunkhash = chunkhash.slice(0, +num);
             }
@@ -89,9 +88,9 @@ ScriptTextWebpackPlugin.prototype.genScriptSrc = function(scriptPattern, scriptC
 
         return Path.join(path, scriptPattern);
     }else{
-        console.error('no '+chunkName+' entry');
+        new Error('no '+chunkName+' entry');
     }
-}
+};
 
 ScriptTextWebpackPlugin.prototype.genScripts = function(singleConfig){
     var compilation = this.compilation,
@@ -128,7 +127,7 @@ ScriptTextWebpackPlugin.prototype.resolveText = function(text, singleConfig){
     var textNamePattern = /\[pageName\]/g,
         textName = singleConfig.pageName || '';
     
-    return text.replace(textNamePattern, textName)
+    return text.replace(textNamePattern, textName);
 };
 
 module.exports = ScriptTextWebpackPlugin;

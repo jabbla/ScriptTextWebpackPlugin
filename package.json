@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/jabbla/ScriptTextWebpackPlugin/issues"
   },
-  "homepage": "https://github.com/jabbla/ScriptTextWebpackPlugin#readme"
+  "homepage": "https://github.com/jabbla/ScriptTextWebpackPlugin#readme",
+  "devDependencies": {
+    "eslint": "^4.6.1"
+  }
 }

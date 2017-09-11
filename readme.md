@@ -155,8 +155,7 @@ chunk.path
     <title>Document</title>
 </head>
 <body>
-<!--positionFlag默认为{{{webpack-chunks}}}-->
-{{{webpack-chunks}}}
+<!--positionFlag默认为{{{webpack-chunks}}}，如果没有该标志默认插在</body>之前-->
 </body>
 </html>
 ```

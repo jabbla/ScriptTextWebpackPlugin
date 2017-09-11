@@ -61,19 +61,22 @@ ScriptTextWebpackPlugin.prototype.readFile = function(fileConfig, singleConfig){
 ScriptTextWebpackPlugin.prototype.generateText = function(sourceStr, singleConfig){
     var flag = (singleConfig.script && singleConfig.script.positionFlag) || this.positionFlag,
         positionFlag = new RegExp(utils.invertRegExpSymbols(flag), 'g'),
-        hasFlag = positionFlag.test(sourceStr),
         scriptStrs = this.genScripts(singleConfig),
         result = '';
 
     if(!scriptStrs) return;
 
+    var hasFlag = positionFlag.test(sourceStr);
     if(hasFlag){
-        result = sourceStr.replace(positionFlag, scriptStrs);
-    }else{
-        result = sourceStr.replace('</body>', scriptStrs+'</body>');
+        return sourceStr.replace(positionFlag, scriptStrs);
+    }
+    
+    var hasBody = new RegExp(utils.invertRegExpSymbols('</body>'), 'g').test(sourceStr);
+    if(hasBody){
+        return sourceStr.replace('</body>', scriptStrs+'</body>');
     }
 
-    return result;
+    return sourceStr+'\n'+scriptStrs;
 };
 
 ScriptTextWebpackPlugin.prototype.genScriptSrc = function(scriptPattern, scriptConfig, singleConfig){

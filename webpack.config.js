@@ -8,7 +8,7 @@ module.exports = {
     },
     output: {
         filename: '[name]/[name].[chunkhash].js',
-        path: './test/dist'
+        path: path.resolve(__dirname, './test/dist')
     },
     plugins: [
         new HelloPlugin({

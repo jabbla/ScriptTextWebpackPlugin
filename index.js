@@ -70,33 +70,12 @@ ScriptTextWebpackPlugin.prototype.generateText = function(sourceStr, singleConfi
 };
 
 ScriptTextWebpackPlugin.prototype.genScriptSrc = function(scriptPattern, scriptConfig, singleConfig){
-    var compilation = this.compilation,
-        entry = this.entry,
-        hash = compilation.hash,
-        chunkName = scriptConfig.name,
+    var chunkName = scriptConfig.name,
         path = this.resolveText(scriptConfig.path, singleConfig),
-        chunkhash = compilation.namedChunks[chunkName].renderedHash;
-        
+        base = this.resolveScriptBase(chunkName);
 
-    if(entry[chunkName]){
-        scriptPattern = scriptPattern.replace(/\[name\]/g, chunkName);
-        scriptPattern = scriptPattern.replace(/\[hash:?([0-9]*)\]/g, function(str, num){
-            if(/[0-9]+/.test(num)){
-                hash = hash.slice(0, +num);
-            }
-            return hash;
-        });
-        scriptPattern = scriptPattern.replace(/\[chunkhash:?([0-9]*)\]/g, function(str, num){
-            if(/[0-9]+/.test(num)){
-                chunkhash = chunkhash.slice(0, +num);
-            }
-            return chunkhash;
-        });
 
-        return Path.join(path, scriptPattern);
-    }else{
-        new Error('no '+chunkName+' entry');
-    }
+    return Path.join(path, base);
 };
 
 ScriptTextWebpackPlugin.prototype.genScripts = function(singleConfig){
@@ -121,6 +100,17 @@ ScriptTextWebpackPlugin.prototype.outputFile = function(outputStr, outputConfig,
         path = this.resolveText(outputConfig.path, singleConfig);
 
     return utils.mustWriteFileAsync(Path.resolve(path, filename), outputStr);
+};
+
+ScriptTextWebpackPlugin.prototype.resolveScriptBase = function(chunkName){
+    var compilation = this.compilation,
+        chunk = compilation.namedChunks[chunkName];
+    if(chunk){
+        var distPath = chunk.files[0];
+        return Path.basename(distPath);
+    }else{
+        throw new Error('no chunk: '+chunkName);
+    }
 };
 
 ScriptTextWebpackPlugin.prototype.resolveText = function(text, singleConfig){

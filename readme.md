@@ -212,3 +212,6 @@ module.exports = {
 
   [1]: https://img.shields.io/badge/language-node.js-orange.svg
   [2]: https://travis-ci.org/jabbla/ScriptTextWebpackPlugin.svg?branch=master
+
+## License
+MIT
